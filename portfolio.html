@@ -17,7 +17,8 @@
 </head>
 <body>
     <div class="container my-3">
-        <legend>JY's Portfolio</legend>
+        <h1 class="mb-3">JY's Portfolio</h1>
+        <legend class="mb-3">Aspiring AI + Software Engineer</legend>
         <my-card
             src="linkedin_job_screener.png"
             title="LinkedIn Job Post Screener"
@@ -33,7 +34,7 @@
             title="LinkedIn Job Description Word Token Analyzer"
             href="https://github.com/li-jiang-yan/linkedin-jd-word-token-analyzer_sklearn"
             year="2026"
-            skills="HTML, Bootstrap, JavaScript, Python, Flask, Scrapy, scikit-learn"
+            skills="HTML, Bootstrap, JavaScript, Chart.js, Python, Flask, Scrapy, scikit-learn"
         >
             Developed a web-app that fetches and word-tokenizes job posts on LinkedIn with a given search criteria.
             The user can select a few word tokens and the webpage will show a bar chart displaying the number of job posts fetched with the given word tokens.
@@ -43,11 +44,17 @@
             title="Credit Card Default Predictor"
             href="https://github.com/li-jiang-yan/credit-card-default-classification_various"
             year="2025"
-            skills="Python, scikit-learn, Keras, TensorFlow, Matplotlib"
+            skills="Python, scikit-learn, Keras, TensorFlow, Matplotlib, JavaScript, Chart.js"
         >
-            <canvas class="mb-3" id="credit-default-predictor-1f-id"></canvas>
             <div class="mb-3">
-                <select id="credit-default-predictor-metric-id" class="form-select row">
+                <div class="input-group">
+                    <label class="input-group-text" for="credit-default-predictor-1f-value-id">Repayment status 2 months ago:</label>
+                    <input class="form-control" id="credit-default-predictor-1f-value-id" type="number" min="-2" max="8" value="-2"></input>
+                </div>
+                <canvas id="credit-default-predictor-1f-id"></canvas>
+            </div>
+            <div class="mb-3">
+                <select id="credit-default-predictor-metric-id" class="form-select input-group">
                     <option value="accuracy">Accuracy</option>
                     <option value="precision">Precision</option>
                     <option value="recall">Recall</option>
@@ -57,6 +64,16 @@
             </div>
             Developed several classification models (e.g. logistic regression, random forest, SVMs, artificial neural networks) to predict credit card defaults using real world data.
             This repository also features Python scripts used to determine the best features and learning rates.
+        </my-card>
+        <my-card
+            title="Optical Recognition of Handwritten Digits",
+            href="",
+            year="2025",
+            skills="Python, scikit-learn, Keras, TensorFlow, NumPy, Matplotlib, JavaScript, TensorFlow.js"
+        >
+            Developed a neural network using TensorFlow Keras to classify handwritten digits from the Optical Recognition dataset, including data preprocessing, model training, and performance evaluation.
+            This repository also features a Python script used to determine an appropriate learning rate.
+            <canvas class="mb-3" id="mnist-rate-plot-id"></canvas>
         </my-card>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
@@ -125,7 +142,7 @@
         customElements.define("my-card", MyCard);
     </script>
     <script>
-        new Chart(document.getElementById('credit-default-predictor-1f-id'), {
+        const creditDefaultPredictor1dChart = new Chart(document.getElementById('credit-default-predictor-1f-id'), {
             data: {
                 labels: [-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8],
                 datasets: [
@@ -185,12 +202,39 @@
                     },
                     tooltip: {
                         callbacks: {
-                            label: (context) => `${context.dataset.label}: ${(context.parsed.y * 100).toFixed(1)}%`
+                            label: (context) => {
+                                let label = [`${context.dataset.label}: ${(context.parsed.y * 100).toFixed(1)}%`];
+                                if (context.dataset.type === 'line') {
+                                    label.push(`svm prediction: ${(context.parsed.x < 2.5) ? 'non-defaulter' : 'defaulter'}`);
+                                }
+                                return label;
+                            },
                         }
                     }
                 }
             }
         });
+
+        const creditDefaultPredictor1dInput = document.getElementById("credit-default-predictor-1f-value-id");
+
+        function creditDefaultPredictor1dListener (xValue) {
+            const index = creditDefaultPredictor1dChart.data.labels.indexOf(Number(xValue));
+
+            const activePoints = creditDefaultPredictor1dChart.data.datasets.map((_, datasetIndex) => ({datasetIndex, index}));
+
+            creditDefaultPredictor1dChart.setActiveElements(activePoints);
+
+            creditDefaultPredictor1dChart.tooltip.setActiveElements(activePoints, {
+                x: creditDefaultPredictor1dChart.getDatasetMeta(0).data[index].x,
+                y: creditDefaultPredictor1dChart.getDatasetMeta(0).data[index].y
+            });
+
+            creditDefaultPredictor1dChart.update();
+        }
+
+        creditDefaultPredictor1dInput.addEventListener("input", (e) => creditDefaultPredictor1dListener(e.target.value));
+
+        creditDefaultPredictor1dListener(creditDefaultPredictor1dInput.value);
     </script>
     <script>
         const creditDefaultPredictorMetricSelectElement = document.getElementById('credit-default-predictor-metric-id');
@@ -283,6 +327,79 @@
         creditDefaultPredictorMetricSelectElement.addEventListener("change", (event) => {
             chart.data.datasets = metricDatasets[event.target.value];
             chart.update();
+        });
+    </script>
+    <script>
+        new Chart(document.getElementById("mnist-rate-plot-id"), {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    label: 'Model accuracy after 30 training epochs',
+                    data: [
+                        {x: 0.00000001, y: 0.106288258208125},
+                        {x: 0.00143001, y: 0.997217584863662},
+                        {x: 0.00286001, y: 0.999443516972732},
+                        {x: 0.00429001, y: 0.999443516972732},
+                        {x: 0.00572001, y: 0.998330550918197},
+                        {x: 0.00715001, y: 0.986087924318308},
+                        {x: 0.00858001, y: 0.983861992209238},
+                        {x: 0.01001001, y: 0.975514746800223},
+                        {x: 0.01144001, y: 0.965498052309405},
+                        {x: 0.01287001, y: 0.953811908736784},
+                        {x: 0.01430001, y: 0.963828603227602},
+                        {x: 0.01573001, y: 0.956037840845854},
+                        {x: 0.01716001, y: 0.939343350027824},
+                        {x: 0.01859001, y: 0.939899833055092},
+                        {x: 0.02002001, y: 0.94045631608236},
+                        {x: 0.02145001, y: 0.926544240400668},
+                        {x: 0.02288001, y: 0.896494156928214},
+                        {x: 0.02431001, y: 0.915971062882582},
+                        {x: 0.02574001, y: 0.868113522537563},
+                        {x: 0.02717001, y: 0.873121869782972},
+                        {x: 0.02860001, y: 0.895937673900946},
+                        {x: 0.03003001, y: 0.809682804674457},
+                        {x: 0.03146001, y: 0.89983305509182},
+                        {x: 0.03289001, y: 0.708959376739009},
+                        {x: 0.03432001, y: 0.787423483583751},
+                        {x: 0.03575001, y: 0.525876460767947},
+                        {x: 0.03718001, y: 0.796327212020033},
+                        {x: 0.03861001, y: 0.585976627712855},
+                        {x: 0.04004001, y: 0.39621591541458},
+                        {x: 0.04147001, y: 0.645520311630495},
+                        {x: 0.04290001, y: 0.287701725097385},
+                        {x: 0.04433001, y: 0.547579298831386},
+                        {x: 0.04576001, y: 0.410127991096272},
+                        {x: 0.04719001, y: 0.293266555370061},
+                        {x: 0.04862001, y: 0.230383973288815},
+                        {x: 0.05005001, y: 0.380634390651085},
+                        {x: 0.05148001, y: 0.196994991652755},
+                        {x: 0.05291001, y: 0.170283806343907},
+                        {x: 0.05434001, y: 0.287145242070117},
+                        {x: 0.05577001, y: 0.100723427935448},
+                        {x: 0.05720001, y: 0.256538675570395},
+                        {x: 0.05863001, y: 0.18864774624374},
+                        {x: 0.06006001, y: 0.191430161380078},
+                        {x: 0.06149001, y: 0.189760712298275},
+                        {x: 0.06292001, y: 0.275459098497496},
+                        {x: 0.06435001, y: 0.279910962715637},
+                        {x: 0.06578001, y: 0.194769059543684},
+                        {x: 0.06721001, y: 0.193099610461881},
+                        {x: 0.06864001, y: 0.250973845297718},
+                        {x: 0.07007001, y: 0.381190873678353},
+                    ],
+                    showLine: true,
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        title: {
+                            text: 'Learning rate',
+                            display: true,
+                        }
+                    }
+                }
+            }
         });
     </script>
 </body>
