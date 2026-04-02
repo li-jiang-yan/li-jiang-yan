@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <title>JY's Portfolio</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB' crossorigin='anonymous'>
     <style>
         img {
             width: auto;
@@ -16,132 +16,132 @@
     </style>
 </head>
 <body>
-    <div class="container my-3">
-        <h1 class="mb-3">JY's Portfolio</h1>
-        <legend class="mb-3">Aspiring AI + Software Engineer</legend>
+    <div class='container my-3'>
+        <h1 class='mb-3'>JY's Portfolio</h1>
+        <legend class='mb-3'>Aspiring AI + Software Engineer</legend>
         <my-card
-            src="linkedin_job_screener.png"
-            title="LinkedIn Job Post Screener"
-            href="https://github.com/li-jiang-yan/linkedin-jd-screener"
-            year="2026"
-            skills="HTML, Bootstrap, JavaScript, Python, Flask, Scrapy, scikit-learn"
+            src='linkedin_job_screener.png'
+            title='LinkedIn Job Post Screener'
+            href='https://github.com/li-jiang-yan/linkedin-jd-screener'
+            year='2026'
+            skills='HTML, Bootstrap, JavaScript, Python, Flask, Scrapy, scikit-learn'
         >
             Developed a web-app that helps job applicants search, filter and sort job openings on LinkedIn.
             Search results are sorted based on the number of preferred word tokens each job's description contains, helping to save job applicants' energy and time spent from reading job descriptions.
         </my-card>
         <my-card
-            src="linkedin_job_description_word_token_analyzer.png"
-            title="LinkedIn Job Description Word Token Analyzer"
-            href="https://github.com/li-jiang-yan/linkedin-jd-word-token-analyzer_sklearn"
-            year="2026"
-            skills="HTML, Bootstrap, JavaScript, Chart.js, Python, Flask, Scrapy, scikit-learn"
+            src='linkedin_job_description_word_token_analyzer.png'
+            title='LinkedIn Job Description Word Token Analyzer'
+            href='https://github.com/li-jiang-yan/linkedin-jd-word-token-analyzer_sklearn'
+            year='2026'
+            skills='HTML, Bootstrap, JavaScript, Chart.js, Python, Flask, Scrapy, scikit-learn'
         >
             Developed a web-app that fetches and word-tokenizes job posts on LinkedIn with a given search criteria.
             The user can select a few word tokens and the webpage will show a bar chart displaying the number of job posts fetched with the given word tokens.
             An example use-case would be to quantify the demand of each programming language for a given job search criteria.
         </my-card>
         <my-card
-            title="Credit Card Default Prediction Models"
-            href="https://github.com/li-jiang-yan/credit-card-default-classification_various"
-            year="2025"
-            skills="Python, scikit-learn, Keras, TensorFlow, Matplotlib, JavaScript, Chart.js"
+            title='Credit Card Default Prediction Models'
+            href='https://github.com/li-jiang-yan/credit-card-default-classification_various'
+            year='2025'
+            skills='Python, scikit-learn, Keras, TensorFlow, Matplotlib, JavaScript, Chart.js'
         >
-            <div class="mb-3">
-                <div class="input-group">
-                    <label class="input-group-text" for="credit-default-prediction-input-id">Repayment status 2 months ago:</label>
-                    <input class="form-control" id="credit-default-prediction-input-id" type="number" min="-2" max="8" value="-2"></input>
+            <div class='mb-3'>
+                <div class='input-group'>
+                    <label class='input-group-text' for='credit-default-prediction-input-id'>Repayment status 2 months ago:</label>
+                    <input class='form-control' id='credit-default-prediction-input-id' type='number' min='-2' max='8' value='-2'></input>
                 </div>
-                <canvas id="credit-default-prediction-canvas-charts-id"></canvas>
+                <canvas id='credit-default-prediction-canvas-charts-id'></canvas>
             </div>
-            <div class="mb-3">
-                <select id="credit-default-prediction-select-id" class="form-select input-group">
+            <div class='mb-3'>
+                <select id='credit-default-prediction-select-id' class='form-select input-group'>
                     <option>Accuracy</option>
                     <option>Precision</option>
                     <option>Recall</option>
                     <option>F1-score</option>
                 </select>
-                <canvas id="credit-default-prediction-canvas-models-id"></canvas>
+                <canvas id='credit-default-prediction-canvas-models-id'></canvas>
             </div>
             Developed several classification models (e.g. logistic regression, random forest, SVMs, artificial neural networks) to predict credit card defaults using real world data.
             This repository also features Python scripts used to determine the best features and learning rates.
         </my-card>
         <my-card
-            title="Handwritten Digit Optical Recognition",
-            href="",
-            year="2025",
-            skills="Python, scikit-learn, Keras, TensorFlow, NumPy, Matplotlib, JavaScript, TensorFlow.js"
+            title='Handwritten Digit Optical Recognition',
+            href='https://github.com/li-jiang-yan/digits-classification_ann-tensorflow-keras',
+            year='2025',
+            skills='Python, scikit-learn, Keras, TensorFlow, NumPy, Matplotlib, JavaScript, TensorFlow.js'
         >
             Developed a neural network using TensorFlow Keras to classify handwritten digits from the Optical Recognition dataset, including data preprocessing, model training, and performance evaluation.
             This repository also features a Python script used to determine an appropriate learning rate.
-            <canvas class="mb-3" id="digits-canvas-rates-id"></canvas>
+            <canvas class='mb-3' id='digits-canvas-rates-id'></canvas>
         </my-card>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.1.0/dist/chartjs-plugin-annotation.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js' integrity='sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI' crossorigin='anonymous'></script>
+    <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.1.0/dist/chartjs-plugin-annotation.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js'></script>
 
     <!-- my-card custom tag -->
     <script>
         class MyCard extends HTMLElement {
             constructor() {
                 super();
-                this.classList.add("card", "mb-3");
+                this.classList.add('card', 'mb-3');
             }
 
             createTitleElement() {
-                const titleElement = document.createElement("div");
-                titleElement.innerHTML = `<a href="${this.getAttribute("href")}" style="text-decoration: none;">
-                    <strong>${this.getAttribute("title")}</strong>
+                const titleElement = document.createElement('div');
+                titleElement.innerHTML = `<a href='${this.getAttribute('href')}' style='text-decoration: none;'>
+                    <strong>${this.getAttribute('title')}</strong>
                     </a>`;
-                titleElement.classList.add("card-title");
+                titleElement.classList.add('card-title');
                 return titleElement;
             }
 
             createImgElement() {
-                const imgElement = document.createElement("img");
-                imgElement.setAttribute("src", this.getAttribute("src"));
-                imgElement.classList.add("card-img-top");
+                const imgElement = document.createElement('img');
+                imgElement.setAttribute('src', this.getAttribute('src'));
+                imgElement.classList.add('card-img-top');
                 return imgElement;
             }
 
             createSubtitleElement() {
-                const subtitleElement = document.createElement("div");
-                subtitleElement.innerHTML = `<strong>${this.getAttribute("year")}</strong>`;
-                subtitleElement.classList.add("card-subtitle", "mb-2", "text-muted");
+                const subtitleElement = document.createElement('div');
+                subtitleElement.innerHTML = `<strong>${this.getAttribute('year')}</strong>`;
+                subtitleElement.classList.add('card-subtitle', 'mb-2', 'text-muted');
                 return subtitleElement;
             }
 
             createTextElement() {
-                const textElement = document.createElement("div");
+                const textElement = document.createElement('div');
                 textElement.innerHTML = this.innerHTML.trim();
-                textElement.classList.add("card-text");
-                this.innerHTML = "";
+                textElement.classList.add('card-text');
+                this.innerHTML = '';
                 return textElement;
             }
 
             createSkillElement() {
-                const skillElement = document.createElement("div");
-                skillElement.innerHTML = "Skills: " + this.getAttribute("skills");
-                skillElement.classList.add("text-muted");
+                const skillElement = document.createElement('div');
+                skillElement.innerHTML = 'Skills: ' + this.getAttribute('skills');
+                skillElement.classList.add('text-muted');
                 return skillElement;
             }
 
             connectedCallback() {
-                const bodyElement = document.createElement("div");
-                bodyElement.classList.add("card-body");
+                const bodyElement = document.createElement('div');
+                bodyElement.classList.add('card-body');
 
-                if (this.getAttribute("title")) bodyElement.appendChild(this.createTitleElement());
-                if (this.getAttribute("year")) bodyElement.appendChild(this.createSubtitleElement());
+                if (this.getAttribute('title')) bodyElement.appendChild(this.createTitleElement());
+                if (this.getAttribute('year')) bodyElement.appendChild(this.createSubtitleElement());
                 if (this.innerHTML.trim()) bodyElement.appendChild(this.createTextElement());
-                if (this.getAttribute("skills")) bodyElement.appendChild(this.createSkillElement());
+                if (this.getAttribute('skills')) bodyElement.appendChild(this.createSkillElement());
 
-                if (this.getAttribute("src")) this.appendChild(this.createImgElement());
+                if (this.getAttribute('src')) this.appendChild(this.createImgElement());
                 this.appendChild(bodyElement);
             }
         }
 
-        customElements.define("my-card", MyCard);
+        customElements.define('my-card', MyCard);
     </script>
 
     <!-- Custom scripts -->
