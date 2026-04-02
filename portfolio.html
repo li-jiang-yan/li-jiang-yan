@@ -41,45 +41,47 @@
             An example use-case would be to quantify the demand of each programming language for a given job search criteria.
         </my-card>
         <my-card
-            title="Credit Card Default Predictor"
+            title="Credit Card Default Prediction Models"
             href="https://github.com/li-jiang-yan/credit-card-default-classification_various"
             year="2025"
             skills="Python, scikit-learn, Keras, TensorFlow, Matplotlib, JavaScript, Chart.js"
         >
             <div class="mb-3">
                 <div class="input-group">
-                    <label class="input-group-text" for="credit-default-predictor-1f-value-id">Repayment status 2 months ago:</label>
-                    <input class="form-control" id="credit-default-predictor-1f-value-id" type="number" min="-2" max="8" value="-2"></input>
+                    <label class="input-group-text" for="credit-default-prediction-input-id">Repayment status 2 months ago:</label>
+                    <input class="form-control" id="credit-default-prediction-input-id" type="number" min="-2" max="8" value="-2"></input>
                 </div>
-                <canvas id="credit-default-predictor-1f-id"></canvas>
+                <canvas id="credit-default-prediction-canvas-charts-id"></canvas>
             </div>
             <div class="mb-3">
-                <select id="credit-default-predictor-metric-id" class="form-select input-group">
+                <select id="credit-default-prediction-select-id" class="form-select input-group">
                     <option value="accuracy">Accuracy</option>
                     <option value="precision">Precision</option>
                     <option value="recall">Recall</option>
                     <option value="f1Score">F1-score</option>
                 </select>
-                <canvas id="credit-default-predictor-models-id"></canvas>
+                <canvas id="credit-default-prediction-canvas-models-id"></canvas>
             </div>
             Developed several classification models (e.g. logistic regression, random forest, SVMs, artificial neural networks) to predict credit card defaults using real world data.
             This repository also features Python scripts used to determine the best features and learning rates.
         </my-card>
         <my-card
-            title="Optical Recognition of Handwritten Digits",
+            title="Handwritten Digit Optical Recognition",
             href="",
             year="2025",
             skills="Python, scikit-learn, Keras, TensorFlow, NumPy, Matplotlib, JavaScript, TensorFlow.js"
         >
             Developed a neural network using TensorFlow Keras to classify handwritten digits from the Optical Recognition dataset, including data preprocessing, model training, and performance evaluation.
             This repository also features a Python script used to determine an appropriate learning rate.
-            <canvas class="mb-3" id="mnist-rate-plot-id"></canvas>
+            <canvas class="mb-3" id="digits-canvas-rates-id"></canvas>
         </my-card>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.1.0/dist/chartjs-plugin-annotation.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+
+    <!-- my-card custom tag -->
     <script>
         class MyCard extends HTMLElement {
             constructor() {
@@ -141,8 +143,9 @@
 
         customElements.define("my-card", MyCard);
     </script>
+
     <script>
-        const creditDefaultPredictor1dChart = new Chart(document.getElementById('credit-default-predictor-1f-id'), {
+        const creditDefaultPredictor1dChart = new Chart(document.getElementById('credit-default-prediction-canvas-charts-id'), {
             data: {
                 labels: [-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8],
                 datasets: [
@@ -215,7 +218,7 @@
             }
         });
 
-        const creditDefaultPredictor1dInput = document.getElementById("credit-default-predictor-1f-value-id");
+        const creditDefaultPredictor1dInput = document.getElementById("credit-default-prediction-input-id");
 
         function creditDefaultPredictor1dListener (xValue) {
             const index = creditDefaultPredictor1dChart.data.labels.indexOf(Number(xValue));
@@ -237,7 +240,7 @@
         creditDefaultPredictor1dListener(creditDefaultPredictor1dInput.value);
     </script>
     <script>
-        const creditDefaultPredictorMetricSelectElement = document.getElementById('credit-default-predictor-metric-id');
+        const creditDefaultPredictorMetricSelectElement = document.getElementById('credit-default-prediction-select-id');
         const metric = creditDefaultPredictorMetricSelectElement.value;
         const metricDatasets = {
             accuracy: [{
@@ -309,7 +312,7 @@
             }],
         };
 
-        const chart = new Chart(document.getElementById('credit-default-predictor-models-id'), {
+        const chart = new Chart(document.getElementById('credit-default-prediction-canvas-models-id'), {
             plugins: [ChartDataLabels],
             data: {
                 labels: ['LR', 'RF-1F', 'RF-MF', 'SVM', 'ANN-1F', 'ANN-MF'],
@@ -330,7 +333,7 @@
         });
     </script>
     <script>
-        new Chart(document.getElementById("mnist-rate-plot-id"), {
+        new Chart(document.getElementById("digits-canvas-rates-id"), {
             type: 'scatter',
             data: {
                 datasets: [{
