@@ -176,7 +176,7 @@ class DrawingCanvas {
     }
 
     addEventListeners() {
-        this.canvas.addEventListener('mousedown', (event) => {
+        this.canvas.addEventListener('pointerdown', (event) => {
             this.isDrawing = true;
 
             // Get initial coordinates relative to canvas
@@ -184,7 +184,7 @@ class DrawingCanvas {
             this.y = event.offsetY;
         });
 
-        this.canvas.addEventListener('mousemove', (event) => {
+        this.canvas.addEventListener('pointermove', (event) => {
             if (this.isDrawing) {
                 this.drawLine(this.x, this.y, event.offsetX, event.offsetY);
 
@@ -194,10 +194,10 @@ class DrawingCanvas {
             }
         });
 
-        this.canvas.addEventListener('mouseup', () => this.stopDrawing());
+        this.canvas.addEventListener('pointerup', () => this.stopDrawing());
 
         // Stop drawing if the mouse leaves the canvas area while pressed
-        this.canvas.addEventListener('mouseout', () => this.stopDrawing());
+        this.canvas.addEventListener('pointerout', () => this.stopDrawing());
 
         this.button.addEventListener('click', () => {
             this.reset();
