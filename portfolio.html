@@ -71,7 +71,43 @@
             year='2025',
             skills='Python, scikit-learn, Keras, TensorFlow, NumPy, Matplotlib, JavaScript, TensorFlow.js'
         >
-            Developed a neural network using TensorFlow Keras to classify handwritten digits from the Optical Recognition dataset, including data preprocessing, model training, and performance evaluation.
+            <table class='table table-bordered'>
+                <thead>
+                    <tr>
+                        <th>Drawing Board</th>
+                        <th>Prediction</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class='mb-3'>Draw in the black box (yes, really!)</div>
+                            <div class="mb-3">
+                                <canvas id='digits-canvas-drawing-id' width='128' height='128'></canvas>
+                            </div>
+                            <div class="mb-3">
+                                <button id='digits-button-id' type='button' class='btn btn-outline-dark'>Clear</button>
+                            </div>
+                        </td>
+                        <td>
+                            <table class='table table-bordered' id='digits-prediction-table-id'>
+                                <thead>
+                                    <tr>
+                                        <th>Digit</th>
+                                        <th>Probability</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                            <div class='input-group'>
+                                <label class='input-group-text' for='digits-prediction-result-id'>Prediction</label>
+                                <div class='form-control' id='digits-prediction-result-id'></div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            Developed a neural network using TensorFlow Keras to classify handwritten digits from the <a href='https://archive.ics.uci.edu/dataset/80/optical+recognition+of+handwritten+digits'>Optical Recognition of Handwritten Digits dataset</a>, including data preprocessing, model training, and performance evaluation.
             This repository also features a Python script used to determine an appropriate learning rate.
             <canvas class='mb-3' id='digits-canvas-rates-id'></canvas>
         </my-card>
@@ -80,6 +116,7 @@
     <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
     <script src='https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.1.0/dist/chartjs-plugin-annotation.min.js'></script>
     <script src='https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest'> </script>
 
     <!-- my-card custom tag -->
     <script>
@@ -146,6 +183,6 @@
 
     <!-- Custom scripts -->
     <script src='credit-default-prediction.js' type='module'></script>
-    <script src='digits.js'></script>
+    <script src='digits.js' type='module'></script>
 </body>
 </html>

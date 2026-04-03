@@ -69,3 +69,140 @@ new Chart(document.getElementById('digits-canvas-rates-id'), {
         }
     }
 });
+
+class DrawingCanvas {
+    constructor(canvasId, buttonId, tableId, resultId, modelJson) {
+        this.canvas = document.getElementById(canvasId);
+        this.context = this.canvas.getContext('2d', { willReadFrequently: true });
+        this.button = document.getElementById(buttonId);
+        this.tbody = document.getElementById(tableId).tBodies[0];
+        this.result = document.getElementById(resultId);
+        this.modelJson = modelJson;
+
+        this.reset();
+
+        // Define lineWidth based on canvas width and height
+        // such that ratio is that lineWidth = 1 for 8x8 image
+        this.lineWidth = Math.sqrt((this.canvas.width * this.canvas.height) / 64);
+
+        // Initialize state variables
+        // isDrawing: state variable to check whether canvas is being drawn or not
+        // x: x-coordinate of mouse w.r.t. canvas, only matters when isDrawing = true
+        // y: y-coordinate of mouse w.r.t. canvas, only matters when isDrawing = true
+        this.isDrawing = false;
+        this.x = 0;
+        this.y = 0;
+
+        // Add event listeners
+        this.addEventListeners();
+    }
+
+    reset() {
+        // Make drawing area black like dataset
+        this.context.fillStyle = 'black';
+        this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+        // Empty probability table
+        this.tbody.replaceChildren();
+        for (let i = 0; i < 10; i++) {
+            let row = this.tbody.insertRow();
+            let cell = row.insertCell();
+            cell.textContent = i;
+        }
+
+        // Empty result
+        this.result.innerText = '';
+    }
+
+    drawLine(x1, y1, x2, y2) {
+        this.context.beginPath();
+        this.context.strokeStyle = 'white';
+        this.context.lineWidth = this.lineWidth;
+        this.context.lineCap = 'round';
+        this.context.moveTo(x1, y1);
+        this.context.lineTo(x2, y2);
+        this.context.stroke();
+        this.context.closePath();
+    }
+
+    async stopDrawing() {
+        if (this.isDrawing) {
+            // Create a 8x8 mini-canvas and context for the mini-canvas
+            const miniCanvas = document.createElement('canvas');
+            miniCanvas.width = 8;
+            miniCanvas.height = 8;
+
+            const miniContext = miniCanvas.getContext('2d', { willReadFrequently: true });
+
+            // Copy this.canvas into the mini-canvas
+            miniContext.imageSmoothingEnabled = true;
+            miniContext.drawImage(this.canvas, 0, 0, miniCanvas.width, miniCanvas.height);
+
+            // Turn mini-canvas image to BW with only 1 dimension (0-16) for each pixel like dataset
+            // with the Array.prototype.reduce() method
+            const imageData = miniContext.getImageData(0, 0, miniCanvas.width, miniCanvas.height);
+            const data = imageData.data;
+            const callbackFn = (accumulator, _, currentIndex, array) => {
+                if (currentIndex % 4 === 0) {
+                    const pixelVal = (array[currentIndex] + array[currentIndex + 1] + array[currentIndex + 2]) / 3 * 16 / 255;
+                    accumulator.push(pixelVal);
+                }
+                return accumulator;
+            };
+            const initialValue = [];
+            const input = data.reduce(callbackFn, initialValue);
+
+            // Perform model prediction
+            const model = await tf.loadLayersModel(this.modelJson);
+            const tensors = tf.tensor2d([input], [1, 64]);
+            const output = model.predict(tensors);
+            const probabilities = await output.data();
+
+            // Populate table and result
+            this.tbody.replaceChildren();
+            probabilities.forEach((probability, index) => {
+                let row = this.tbody.insertRow();
+                let cell = row.insertCell();
+                cell.innerText = index;
+                cell = row.insertCell();
+                cell.innerText = probability.toFixed(3);
+            });
+
+            // Insert result
+            this.result.innerText = probabilities.indexOf(Math.max(...probabilities));
+        }
+
+        this.isDrawing = false;
+    }
+
+    addEventListeners() {
+        this.canvas.addEventListener('mousedown', (event) => {
+            this.isDrawing = true;
+
+            // Get initial coordinates relative to canvas
+            this.x = event.offsetX;
+            this.y = event.offsetY;
+        });
+
+        this.canvas.addEventListener('mousemove', (event) => {
+            if (this.isDrawing) {
+                this.drawLine(this.x, this.y, event.offsetX, event.offsetY);
+
+                // Update starting point for next segment
+                this.x = event.offsetX;
+                this.y = event.offsetY;
+            }
+        });
+
+        this.canvas.addEventListener('mouseup', () => this.stopDrawing());
+
+        // Stop drawing if the mouse leaves the canvas area while pressed
+        this.canvas.addEventListener('mouseout', () => this.stopDrawing());
+
+        this.button.addEventListener('click', () => {
+            this.reset();
+        });
+    }
+}
+
+new DrawingCanvas('digits-canvas-drawing-id', 'digits-button-id', 'digits-prediction-table-id', 'digits-prediction-result-id', 'digits/model.json');
